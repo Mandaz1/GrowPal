@@ -10,7 +10,7 @@
 
 ---
  
-![Physical Device Photo](docs/physical_device.jpeg)  
+![Physical Device Photo](docs/enclosure_render.jpeg)  
 _The assembled Seeed Studio Xiao ESP32-S3 powering the GrowPal hardware._
 
 ![Frontend Dashboard Screenshot](docs/companion_dashboard.jpeg)  
