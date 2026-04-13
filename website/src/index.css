@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+@theme {
+  --font-family-mono: "Share Tech Mono", monospace;
+  --font-family-sans: "Share Tech Mono", monospace;
+
+  /* PCB Background Palette */
+  --color-pcb-dark: #071f11;
+  --color-gold: #e8a91a;
+  --color-gold-glow: rgba(232, 169, 26, 0.6);
+  --color-cyan: #00e5ff;
+
+  /* Beige Vintage Components Palette (Restored) */
+  --color-surface: #e8e4d5;
+  --color-text-main: #3e2723;
+  --color-orange: #d84315;
+  --color-green: #558b2f;
+}
+
+body {
+  font-family: var(--font-family-mono);
+  background-color: var(--color-pcb-dark);
+  color: var(--color-text-main);
+}
+
+.pcb-board {
+  background: 
+    linear-gradient(rgba(7, 31, 17, 0.95), rgba(7, 31, 17, 0.95)),
+    url("data:image/svg+xml,%3Csvg width='10px' height='10px' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='10' height='10' fill='none' stroke='%23092b15' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+/* Motherboard styled panels (Vintage Beige restored) */
+.motherboard-panel {
+  background-color: var(--color-surface);
+  border: 3px solid var(--color-text-main);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0,0,0,0.05);
+  position: relative;
+  border-radius: 4px;
+  z-index: 10;
+}
+
+/* Add corner screw holes to panels */
+.motherboard-panel::before,
+.motherboard-panel::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #b5ac96;
+  border: 2px solid var(--color-text-main);
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+.motherboard-panel::before { top: 6px; left: 6px; }
+.motherboard-panel::after { bottom: 6px; right: 6px; }
+
+/* Restored smaller inner chips */
+.motherboard-chip {
+  background-color: #2b1f1b;
+  color: var(--color-surface);
+  border: 2px solid #1a1210;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.2), inset 0 0 8px rgba(0,0,0,0.8);
+  position: relative;
+}
+
+.motherboard-chip::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 10px;
+  right: 10px;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #a8a8a8,
+    #a8a8a8 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+.motherboard-chip::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 10px;
+  right: 10px;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #a8a8a8,
+    #a8a8a8 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+/* Base pins connecting panels to the green PCB */
+.panel-pins::before, .panel-pins::after {
+  content: '';
+  position: absolute;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-gold),
+    var(--color-gold) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  height: 5px;
+  left: 10%;
+  right: 10%;
+  z-index: -1;
+}
+.panel-pins::before { top: -8px; }
+.panel-pins::after { bottom: -8px; }
+
+
+/* Traces Animation - thicker */
+.trace-pulse {
+  stroke-dasharray: 150 1500;
+  animation: tracePulse 8s linear infinite;
+}
+
+.trace-pulse-fast {
+  stroke-dasharray: 200 1800;
+  animation: tracePulseFast 5s linear infinite;
+  animation-delay: 2s;
+}
+
+.trace-pulse-slow {
+  stroke-dasharray: 300 2700;
+  animation: tracePulseSlow 12s linear infinite;
+  animation-delay: 1s;
+}
+
+@keyframes tracePulse {
+  0% { stroke-dashoffset: 1650; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes tracePulseFast {
+  0% { stroke-dashoffset: 2000; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes tracePulseSlow {
+  0% { stroke-dashoffset: 3000; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Electronic Components */
+.pcb-led {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #222;
+  border: 2px solid #111;
+  position: absolute;
+  box-shadow: 0 0 2px #000;
+  z-index: 5;
+}
+
+.pcb-led-green {
+  background-color: #0f0;
+  box-shadow: 0 0 15px #0f0, inset 0 0 8px #fff;
+  animation: blinkFast 0.2s infinite alternate;
+}
+
+.pcb-led-red {
+  background-color: #f00;
+  box-shadow: 0 0 15px #f00, inset 0 0 8px #fff;
+  animation: blinkSlow 1s infinite alternate;
+}
+
+@keyframes blinkFast { from { opacity: 0.8; } to { opacity: 1; } }
+@keyframes blinkSlow { from { opacity: 0; } to { opacity: 1; } }
+
+.pcb-capacitor {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #555, #111);
+  position: absolute;
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+  border: 2px solid #000;
+  z-index: 5;
+}
+.pcb-capacitor::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 4px; height: 100%; width: 6px;
+  background-color: #a3a3a3;
+  border-radius: 3px;
+}
+
+.pixelated {
+  image-rendering: pixelated;
+}
+
+.btn-pcb {
+  background-color: #2b1f1b;
+  color: var(--color-surface);
+  border: 2px solid #1a1210;
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+  transition: all 0.1s;
+}
+.btn-pcb:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0;
+}
+.btn-pcb.active {
+  background-color: var(--color-orange);
+  color: #fff;
+  border-color: #bf360c;
+}
