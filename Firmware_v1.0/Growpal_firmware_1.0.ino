@@ -1391,8 +1391,6 @@ void syncTimeFromInternet(bool forcePortal) {
   }
   
   if (!synced) Serial.println("attemptTimeSync: NTP timed out");
-
-  disconnectWiFi();
 }
 
 void getFormattedTime(String &timeString, String &periodString) {
